@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "sportshedge",
+    "slug": "sportshedge",
+    "owner": "sportshedge",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash_sh.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#17171A"
+    },
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.sportshedge.sportshedge"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#17171A"
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.sportshedge.sportshedge"
+    },
+    "web": {
+      "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "5a08b11e-2c4f-48e0-87a7-ee8727c27aad"
+      }
+    }
+  }
+}

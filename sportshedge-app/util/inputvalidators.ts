@@ -1,0 +1,1 @@
+export const isValidNumber = (text: string) => /^\d+$/.test(text);

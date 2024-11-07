@@ -1,0 +1,10 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Live area" clip-path="url(#clip0_781_2633)">
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0ZM10 8.75C9.30964 8.75 8.75 9.30964 8.75 10V15C8.75 15.6904 9.30964 16.25 10 16.25C10.6904 16.25 11.25 15.6904 11.25 15V10C11.25 9.30964 10.6904 8.75 10 8.75ZM8.5 5.5C8.5 6.32843 9.17157 7 10 7C10.8284 7 11.5 6.32843 11.5 5.5C11.5 4.67157 10.8284 4 10 4C9.17157 4 8.5 4.67157 8.5 5.5Z" fill="#E4E4ED"/>
+</g>
+<defs>
+<clipPath id="clip0_781_2633">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,74 @@
+name: Push-to-EC2
+
+# Trigger deployment only on push to master branch
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+      
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Install pm2
+        run: npm install pm2 -g
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Install Node.js, npm, and pm2 on the EC2 server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Check node version
+            NODE_VERSION=$(node --version)
+            REQUIRED_NODE_VERSION="v18.16.0"
+            if [[ "$NODE_VERSION" != *"$REQUIRED_NODE_VERSION"* ]]; then
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+              # install with nvm
+              export NVM_DIR=~/.nvm
+              source ~/.nvm/nvm.sh
+              nvm install $REQUIRED_NODE_VERSION
+            fi
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+      
+            # Check npm version
+            NPM_VERSION=$(npm --version)
+            REQUIRED_NPM_VERSION="9.5.1"  # Set your required npm version
+            if [[ "$NPM_VERSION" != *"$REQUIRED_NPM_VERSION"* ]]; then
+              sudo npm install -g npm@$REQUIRED_NPM_VERSION
+            fi
+      
+            # Check pm2 version
+            PM2_VERSION=$(pm2 --version)
+            REQUIRED_PM2_VERSION="5.3.0"  # Set your required pm2 version
+            if ! type pm2 > /dev/null || [[ "$PM2_VERSION" != *"$REQUIRED_PM2_VERSION"* ]]; then
+              sudo npm install -g pm2@$REQUIRED_PM2_VERSION
+            fi
+            cd ~/app
+            npm install
+            npm run build
+            echo "${{ vars.ENV_FILE }}" > .env
+            pm2 kill
+            pm2 start npm --name sportshedge -- start
+        
